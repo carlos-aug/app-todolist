@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-function TodoList(params) {
+function TodoList() {
   const [task, setTask] = useState("");
   const [listTasks, setListTasks] = useState([]);
 
-  function handleTask(event) {
-    setTask(event.target.value);
+  function handleTask({ target }) {
+    setTask(target.value);
   }
 
   function handleSubmitTask() {
@@ -13,15 +13,26 @@ function TodoList(params) {
     setTask("");
   }
 
+  function handleDeleteTask(index) {
+    const newListTasks = [...listTasks];
+    newListTasks.splice(index, 1);
+    setListTasks(newListTasks);
+  }
+
   return (
     <div>
-      <h1> TodoList </h1>
+      <h1 className="title"> TodoList </h1>
       <input type="text" value={task} onChange={handleTask} />
       <button type="button" onClick={handleSubmitTask}>
         Salvar
       </button>
       {listTasks.map((item, index) => (
-        <li>{item}</li>
+        <li key={index}>
+          {item}
+          <button type="button" onClick={() => handleDeleteTask(index)}>
+            Excluir
+          </button>
+        </li>
       ))}
     </div>
   );
