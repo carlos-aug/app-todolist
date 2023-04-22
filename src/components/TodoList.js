@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function TodoList() {
   const [task, setTask] = useState("");
@@ -15,25 +17,32 @@ function TodoList() {
 
   function handleDeleteTask(index) {
     const newListTasks = [...listTasks];
-    newListTasks.splice(index, 1);
+    newListTasks.pop(index);
     setListTasks(newListTasks);
   }
 
   return (
     <div>
-      <h1 className="title"> TodoList </h1>
-      <input type="text" value={task} onChange={handleTask} />
+      <h1> TodoList </h1>
+      <input
+        type="text"
+        placeholder="Adicione uma tarefa"
+        value={task}
+        onChange={handleTask}
+      />
       <button type="button" onClick={handleSubmitTask}>
-        Salvar
+        Adicionar
       </button>
-      {listTasks.map((item, index) => (
-        <li key={index}>
-          {item}
-          <button type="button" onClick={() => handleDeleteTask(index)}>
-            Excluir
-          </button>
-        </li>
-      ))}
+      <ul className="todo-list">
+        {listTasks.map((item, index) => (
+          <li key={index} className="todo-list">
+            {item}
+            <button type="button" onClick={() => handleDeleteTask(index)}>
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

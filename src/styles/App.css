@@ -7,7 +7,27 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
+  background-color: rgba(52, 53, 65);
+  color: rgba(236, 236, 241);
+  padding-top: 100px;
   height: 100vh;
   border: solid red 3px;
+}
+
+.todo-list li {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.todo-list li button {
+  margin-left: 8px;
+}
+
+.list-tasks {
+  overflow: auto;
+  height: 300px;
 }
