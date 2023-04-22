@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function TodoList() {
   const [task, setTask] = useState("");
@@ -50,9 +48,10 @@ function TodoList() {
               </div>
             )}
             {item}
-            <button type="button" onClick={() => handleDeleteTask(index)}>
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
+            <button
+              type="button"
+              onClick={() => handleDeleteTask(index)}
+            ></button>
           </li>
         ))}
       </ul>
