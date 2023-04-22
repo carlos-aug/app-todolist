@@ -5,6 +5,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 function TodoList() {
   const [task, setTask] = useState("");
   const [listTasks, setListTasks] = useState([]);
+  const [editingTaskIndex, setEditingTaskIndes] = useState(null);
 
   function handleTask({ target }) {
     setTask(target.value);
@@ -19,6 +20,10 @@ function TodoList() {
     const newListTasks = [...listTasks];
     newListTasks.pop(index);
     setListTasks(newListTasks);
+  }
+
+  function handleEditTask(index) {
+    setEditingTaskIndes(index);
   }
 
   return (
@@ -36,6 +41,14 @@ function TodoList() {
       <ul className="todo-list">
         {listTasks.map((item, index) => (
           <li key={index} className="todo-list">
+            {editingTaskIndex === index ? (
+              <input type="text" value={item} />
+            ) : (
+              <div>
+                {item}
+                <button onClick={() => handleEditTask(index)}>Editar</button>
+              </div>
+            )}
             {item}
             <button type="button" onClick={() => handleDeleteTask(index)}>
               <FontAwesomeIcon icon={faTimes} />
