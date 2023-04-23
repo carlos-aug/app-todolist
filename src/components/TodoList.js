@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
 
 function TodoList() {
   const [task, setTask] = useState("");
   const [listTasks, setListTasks] = useState([]);
-  const [editingTaskIndex, setEditingTaskIndes] = useState(null);
+  const [editingTaskIndex, setEditingTaskIndex] = useState(null);
+  const [editedTask, setEditedTask] = useState("");
 
   function handleTask({ target }) {
     setTask(target.value);
   }
 
   function handleSubmitTask() {
+    if (!task.length) {
+      return;
+    }
     setListTasks([...listTasks, task]);
     setTask("");
   }
@@ -21,7 +26,19 @@ function TodoList() {
   }
 
   function handleEditTask(index) {
-    setEditingTaskIndes(index);
+    setEditingTaskIndex(index);
+  }
+
+  function handleSaveTask(index) {
+    const newListTasks = [...listTasks];
+    newListTasks[index] = editedTask;
+    setListTasks(newListTasks);
+    setEditingTaskIndex(null);
+    setEditedTask("");
+  }
+
+  function handleEditedTask({ target }) {
+    setEditedTask(target.value);
   }
 
   return (
@@ -40,18 +57,27 @@ function TodoList() {
         {listTasks.map((item, index) => (
           <li key={index} className="todo-list">
             {editingTaskIndex === index ? (
-              <input type="text" value={item} />
+              <div>
+                <input
+                  type="text"
+                  value={editedTask}
+                  onChange={handleEditedTask}
+                />
+                <button type="button" onClick={() => handleSaveTask(index)}>
+                  Salvar
+                </button>
+              </div>
             ) : (
               <div>
                 {item}
-                <button onClick={() => handleEditTask(index)}>Editar</button>
+                <Button variant="primary" onClick={() => handleEditTask(index)}>
+                  Editar
+                </Button>
               </div>
             )}
-            {item}
-            <button
-              type="button"
-              onClick={() => handleDeleteTask(index)}
-            ></button>
+            <button type="button" onClick={() => handleDeleteTask(index)}>
+              Excluir
+            </button>
           </li>
         ))}
       </ul>
